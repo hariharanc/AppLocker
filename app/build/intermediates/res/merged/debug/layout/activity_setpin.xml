@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background">
+
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/toolbar" />
+
+
+    <RelativeLayout
+        android:id="@+id/rr_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tool_bar">
+
+        <RelativeLayout
+            android:id="@+id/rr_pin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="75dp">
+            <EditText
+                android:id="@+id/edt_current_pin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:inputType="textPassword"
+                android:hint="Current Pin"
+                />
+
+            <EditText
+                android:id="@+id/edt_new_pin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_below="@+id/edt_current_pin"
+                android:hint="New Pin"
+                android:inputType="textPassword"/>
+
+            <EditText
+                android:id="@+id/edt_confirm_pin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edt_new_pin"
+                android:layout_marginTop="20dp"
+                android:inputType="textPassword"
+                android:hint="Confirm Pin" />
+
+            <Button
+                android:id="@+id/btn_set_pin"
+                android:layout_below="@+id/edt_confirm_pin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="Set Pin"
+                android:textColor="@android:color/white"
+                android:background="@color/ColorPrimary"
+                android:layout_centerHorizontal="true"/>
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.hari.locker.MainActivity" >
+    <item
+        android:id="@+id/action_set_pin"
+        android:orderInCategory="100"
+        android:title="Set Pin"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_reset_pin"
+        android:orderInCategory="100"
+        android:title="Reset Pin"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_refresh"
+        android:orderInCategory="100"
+        android:title="Refresh"
+        app:showAsAction="never"/>
+
+</menu>
