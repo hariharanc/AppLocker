@@ -4,29 +4,34 @@
     api-level="21"
     density="hdpi"
     format="7"
-    timestamp="27719552786907" >
+    timestamp="33624428652884" >
 
     <task
         name="javac"
-        duration="3236" />
+        duration="518" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="335" />
+        duration="47" />
     <task
         name="verifier"
-        duration="27" />
+        duration="2" />
 
     <artifact
-        location="/Users/ITDept/Documents/hari/MyAppLocker/app/build/outputs/apk/app-debug.apk"
-        type="MAIN" />
+        location="/Users/ITDept/Documents/hari/MyAppLocker/app/build/intermediates/transforms/dex/debug/folders/1000/5/slice_6/classes.dex"
+        type="DEX" />
 
-    <build timestamp="27719552786907" >
+    <build timestamp="33470520385652" >
         <artifact
             location="/Users/ITDept/Documents/hari/MyAppLocker/app/build/outputs/apk/app-debug.apk"
             type="MAIN" />
+    </build>
+    <build timestamp="33624428652884" >
+        <artifact
+            location="/Users/ITDept/Documents/hari/MyAppLocker/app/build/intermediates/transforms/dex/debug/folders/1000/5/slice_6/classes.dex"
+            type="DEX" />
     </build>
 
 </instant-run>

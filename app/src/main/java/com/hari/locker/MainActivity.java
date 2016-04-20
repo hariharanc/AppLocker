@@ -100,10 +100,7 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     protected void onPause() {
         super.onPause();
-        ActivityManager activityManager = (ActivityManager) getApplicationContext()
-                .getSystemService(Context.ACTIVITY_SERVICE);
 
-        activityManager.moveTaskToFront(getTaskId(), 0);
     }
 
     private void initViews() {
@@ -143,29 +140,29 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        return super.onPrepareOptionsMenu(menu);
+        isBackPressed= true;
+        Log.i(MainActivity.class.toString(), "MainActivity onOptionsItemSelected"+isBackPressed);
+        return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
+
+
         switch (item.getItemId()) {
             case R.id.action_reset_pin:
-                isBackPressed= true;
                 Intent i = new Intent(MainActivity.this, SetPinActivity.class);
                 i.putExtra("pinOption", "resetpin");
                 startActivity(i);
                 return true;
 
             case R.id.action_set_pin:
-                isBackPressed= true;
                 Intent pinIntent = new Intent(MainActivity.this, SetPinActivity.class);
                 pinIntent.putExtra("pinOption", "setpin");
                 startActivity(pinIntent);
                 return true;
-
             case R.id.action_refresh:
-
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -400,16 +397,19 @@ public class MainActivity extends AppCompatActivity implements
 
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        Log.i(MainActivity.class.toString(), "MainActivity Focus changed !");
+        Log.i(MainActivity.class.toString(), "MainActivity Focus changed !"+hasFocus);
 
         if (!hasFocus) {
-            Log.i(MainActivity.class.toString(), "MainActivity Lost Focus!");
+            Log.i(MainActivity.class.toString(), "MainActivity Lost Focus!"+isBackPressed);
             if(isBackPressed == false) {
                 isBackPressed(false);
             }
 //            Intent closeDialog = new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
 //            sendBroadcast(closeDialog);
 
+        }
+        else if(hasFocus){
+            isBackPressed=false;
         }
     }
 

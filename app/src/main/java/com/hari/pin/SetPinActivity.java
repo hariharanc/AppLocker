@@ -82,10 +82,6 @@ public class SetPinActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onPause() {
         super.onPause();
-        ActivityManager activityManager = (ActivityManager) getApplicationContext()
-                .getSystemService(Context.ACTIVITY_SERVICE);
-
-        activityManager.moveTaskToFront(getTaskId(), 0);
     }
 
     @Override
@@ -167,9 +163,10 @@ public class SetPinActivity extends AppCompatActivity implements View.OnClickLis
 
                                     if (message.equalsIgnoreCase("PIN Set Successfully!!!") ||
                                             message.equalsIgnoreCase("PIN Updated Successfully!!!")) {
-                                        // Intent mainIntent=new Intent(SetPinActivity.this, MainActivity.class);
-                                        // startActivity(mainIntent);
+                                         Intent mainIntent=new Intent(SetPinActivity.this, MainActivity.class);
+                                         startActivity(mainIntent);
                                         finish();
+                                        dialog.cancel();
                                     }
 
                                 }
@@ -178,4 +175,5 @@ public class SetPinActivity extends AppCompatActivity implements View.OnClickLis
             }
         });
     }
+
 }

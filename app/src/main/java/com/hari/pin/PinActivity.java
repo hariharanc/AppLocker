@@ -24,120 +24,126 @@ import android.widget.Button;
 import android.widget.EditText;
 
 public class PinActivity extends AppCompatActivity implements OnClickListener {
-	private Toolbar toolbar;
-	private EditText mEdtPin;
-	private Button mBtnDone;
-	private static String pin = "12345";
-	private SharedPreferences mSharedPreferences;
-	private Editor mEditor;
-	private String packName;
-	private DatabaseHandler mDatabaseHandler;
+    private Toolbar toolbar;
+    private EditText mEdtPin;
+    private Button mBtnDone;
+    private SharedPreferences mSharedPreferences;
+    private Editor mEditor;
+    private String packName;
+    private DatabaseHandler mDatabaseHandler;
+    private Boolean isAuthentication = false;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_pin);
-		mSharedPreferences = getSharedPreferences("hariPref",
-				Context.MODE_PRIVATE);
-		mEditor = mSharedPreferences.edit();
-		mDatabaseHandler = new DatabaseHandler(this);
-		if (getIntent().getStringExtra("packName") != null) {
-			packName = getIntent().getStringExtra("packName");
-		}
-		initViews();
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_pin);
+        mSharedPreferences = getSharedPreferences("hariPref",
+                Context.MODE_PRIVATE);
+        mEditor = mSharedPreferences.edit();
+        mDatabaseHandler = new DatabaseHandler(this);
+        if (getIntent().getStringExtra("packName") != null) {
+            packName = getIntent().getStringExtra("packName");
+        } else if (getIntent().getStringExtra("authentication") != null && getIntent().getStringExtra("authentication").equalsIgnoreCase("authentication")) {
+            isAuthentication = true;
+        }
+        initViews();
 
-	}
+    }
 
-	private void initViews() {
-		toolbar = (Toolbar) findViewById(R.id.tool_bar);
-		toolbar.setTitleTextColor(Color.WHITE);
-		setSupportActionBar(toolbar);
-		mEdtPin = (EditText) findViewById(R.id.edit_pin);
-		mBtnDone = (Button) findViewById(R.id.btn_sbt);
-		mBtnDone.setOnClickListener(this);
+    private void initViews() {
+        toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        toolbar.setTitleTextColor(Color.WHITE);
+        setSupportActionBar(toolbar);
+        mEdtPin = (EditText) findViewById(R.id.edit_pin);
+        mBtnDone = (Button) findViewById(R.id.btn_sbt);
+        mBtnDone.setOnClickListener(this);
 
-	}
+    }
 
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-			case R.id.btn_sbt:
-				if (mEdtPin.getText().toString().length() == 0) {
-					alertDialog("Please Enter Your PIN!!!");
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_sbt:
+                if (mEdtPin.getText().toString().length() == 0) {
+                    alertDialog("Please Enter Your PIN!!!");
+                } else if (!mEdtPin.getText().toString().equalsIgnoreCase(mSharedPreferences.getString("myPin", ""))) {
+                    alertDialog("Invalid PIN!!!");
+                } else if (mEdtPin.getText().toString().equalsIgnoreCase(mSharedPreferences.getString("myPin", ""))) {
 
-				} else if (!mEdtPin.getText().toString().equalsIgnoreCase(mSharedPreferences.getString("myPin", ""))) {
-					alertDialog("Invalid PIN!!!");
-				} else if (mEdtPin.getText().toString().equalsIgnoreCase(mSharedPreferences.getString("myPin", ""))) {
-					mDatabaseHandler.upDateLockApp(packName, "0");
-					mEditor.putString("packName", packName);
-					mEditor.commit();
-					finish();
-
-				}
-				break;
-
-			default:
-				break;
-		}
-
-	}
-
-	@Override
-	protected void onPause() {
-		super.onPause();
-		Log.i(PinActivity.class.toString(), "PinActivity onPause");
-	}
-
-	@Override
-	protected void onStop() {
-		super.onStop();
-		Log.i(PinActivity.class.toString(), "PinActivity onStop");
-	}
-
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		Log.i(PinActivity.class.toString(), "PinActivity onDestroy");
-	}
-
-	private void alertDialog(final String message) {
-
-		runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-
-				if (!isFinishing()) {
-					new AlertDialog.Builder(PinActivity.this)
-							.setTitle("Alert")
-							.setMessage(message)
-							.setCancelable(false)
-							.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-								@Override
-								public void onClick(DialogInterface dialog, int which) {
-
-								}
-							}).create().show();
-				}
-			}
-		});
-	}
+                    if (isAuthentication == true) {
+                        Intent i = new Intent(PinActivity.this, MainActivity.class);
+                        startActivity(i);
+                        finish();
+                    } else {
+                        mDatabaseHandler.upDateLockApp(packName, "0");
+                        mEditor.putString("packName", packName);
+                        mEditor.commit();
+                        finish();
+                    }
 
 
+                }
+                break;
 
-	public void onWindowFocusChanged(boolean hasFocus) {
-		super.onWindowFocusChanged(hasFocus);
-		Log.i(PinActivity.class.toString(), "PinActivity Focus changed !");
+            default:
+                break;
+        }
 
-		if (!hasFocus) {
-			Log.i(PinActivity.class.toString(), "PinActivity Lost Focus!");
-			finish();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.i(PinActivity.class.toString(), "PinActivity onPause");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.i(PinActivity.class.toString(), "PinActivity onStop");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i(PinActivity.class.toString(), "PinActivity onDestroy");
+    }
+
+    private void alertDialog(final String message) {
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                if (!isFinishing()) {
+                    new AlertDialog.Builder(PinActivity.this)
+                            .setTitle("Alert")
+                            .setMessage(message)
+                            .setCancelable(false)
+                            .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            }).create().show();
+                }
+            }
+        });
+    }
+
+
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        Log.i(PinActivity.class.toString(), "PinActivity Focus changed !");
+
+        if (!hasFocus) {
+            Log.i(PinActivity.class.toString(), "PinActivity Lost Focus!");
+            finish();
 //            Intent closeDialog = new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
 //            sendBroadcast(closeDialog);
 
-		}
-	}
-
-
+        }
+    }
 
 
 }
